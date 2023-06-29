@@ -1,0 +1,18 @@
+.text-left {
+    text-align: left;
+}
+
+.text-right {
+    text-align: right;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.solution-letter {
+    text-transform: uppercase;
+    font-size: xx-large;
+    min-height: 70px;
+    min-width: 70px;
+}
