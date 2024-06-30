@@ -69,7 +69,7 @@ const getBracketData = () => {
     const inputElement = document.querySelector(FILING_STATUS_SELECT_SELECTOR);
     const index = getTransformedIntInput(
         inputElement,
-        input => input > 0 && input < brackets.length,
+        input => input > 0 && input <= brackets.length,
         input => input - 1
     );
 
