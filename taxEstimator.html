@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+        <link rel="stylesheet" href="./css/verble.css">
+        <title>Tax Estimator</title>
+    </head>
+    <body class="bg-light d-flex flex-column min-vh-100 text-dark">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <div class="container">
+                <a class="navbar-brand" href="index.html">
+                    Charles Stewart
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div id="nav" class="collapse navbar-collapse">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link" href="https://www.linkedin.com/in/charles-stewart-5a254182/" target="_blank" rel="noopener noreferrer">
+                                Linkedin
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="https://github.com/cstewart2010" target="_blank" rel="noopener noreferrer">
+                                Github
+                            </a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Projects
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li>
+                                    <a class="dropdown-item" href="https://pta-frontend.pages.dev/" target="_blank" rel="noopener noreferrer">
+                                        Pokemon Tabletop Adventures WebApp
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="verble.html">
+                                        Verble
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="taxEstimator.html">
+                                        Tax Estimator
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <h2 class="text-center">Tax Estimator</h2>
+        <div class="container">
+            <p class="text-center">
+                A very simple Federal Income Tax Calculator for 2024. May continue work in the future.
+            </p>
+            <section class="my-2">
+                <h3>Tax Information</h3>
+                <div class="row mt-3">
+                    <div class="col">Your federal income tax burden for 2024 is:</div>
+                    <div class="col-2" id="tax-burden"></div>
+                </div>
+                <div class="row">
+                    <div class="col">Your FICA tax burden for 2024 is:</div>
+                    <div class="col-2" id="fica-burden"></div>
+                </div>
+                <div class="row">
+                    <div class="col">Your tax credits for 2024 is:</div>
+                    <div class="col-2" id="credits"></div>
+                </div>
+                <div class="row">
+                    <div class="col">Your effective tax rate in: </div>
+                    <div class="col-2" id="effective-tax-rate"></div>
+                </div>
+
+            </section>
+            <section class="my-2">
+                <h3 class="text-center">Income Data</h3>
+                <div class="my-3 input-group">
+                    <span class="input-group-text">Income</span>
+                    <input type="number" class="form-control" placeholder="What was your 2024 income?" id="income">
+                </div>
+                <div class="my-3 input-group">
+                    <span class="input-group-text">Bracket</span>
+                    <select aria-placeholder="Select a bracket:" id="filing-status" class="form-control">
+                        <option value="1">Single</option>
+                        <option value="2">Married, filing separately</option>
+                        <option value="3">Married, filing jointly</option>
+                        <option value="4">Head of household</option>
+                    </select>
+                </div>
+            </section>
+            <section class="my-2">
+                <h3 class="text-center">Deduction Data</h3>
+                <div class="my-3 input-group">
+                    <span class="input-group-text">401(k)</span>
+                    <input type="number" class="form-control" placeholder="How much did you pay to your 401(k):" id="retirement" min="0" max="23000">
+                </div>
+                <div class="my-3 input-group">
+                    <span class="input-group-text">HSA</span>
+                    <input type="number" class="form-control" placeholder="How much did you pay to your HSA:" id="hsa" min="0" max="8300">
+                </div>
+                <div class="my-3 input-group">
+                    <span class="input-group-text">Payroll</span>
+                    <input type="number" class="form-control" placeholder="How much did you pay to your payroll deductions (health insurance, group policy, etc):" id="payroll" min="0">
+                </div>
+            </section>
+            <section class="my-2">
+                <h3 class="text-center">Credit Data</h3>
+                <div class="my-3 input-group">
+                    <span class="input-group-text">Infant Dependents</span>
+                    <input type="number" class="form-control" placeholder="How many dependents under the age of six do you claim:" id="infant" min="0">
+                </div>
+                <div class="my-3 input-group">
+                    <span class="input-group-text">Young Dependents</span>
+                    <input type="number" class="form-control" placeholder="How many dependents between the ages of 6 and 17 do you claim:" id="young" min="0">
+                </div>
+                <div class="my-3 input-group">
+                    <span class="input-group-text">Adult Dependents</span>
+                    <input type="number" class="form-control" placeholder="How many adult dependents do you claim:" id="adult" min="0">
+                </div>
+            </section>
+            <button class="btn btn-primary" onclick="calculate()">Calculate</button>
+        </div>
+        <script src="https://kit.fontawesome.com/f5e339ea05.js" crossorigin="anonymous"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+        <script src="./js/taxBrackets.js"></script>
+        <script src="./js/taxEstimator.js"></script>
+    </body>
+</html>
