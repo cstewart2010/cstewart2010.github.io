@@ -6,49 +6,49 @@ const brackets = [
       "capitalGainsDeduction": 47025,
       "rates": [
         {
-          "taxRate": 0.1,
+          "taxRate": 10,
           "lowerBound": 0,
           "upperBound": 11600
         },
         {
-          "taxRate": 0.12,
-          "lowerBound": 11601,
+          "taxRate": 12,
+          "lowerBound": 11600,
           "upperBound": 47150
         },
         {
-          "taxRate": 0.22,
-          "lowerBound": 47151,
+          "taxRate": 22,
+          "lowerBound": 47150,
           "upperBound": 100525
         },
         {
-          "taxRate": 0.24,
-          "lowerBound": 100526,
+          "taxRate": 24,
+          "lowerBound": 100525,
           "upperBound": 191950
         },
         {
-          "taxRate": 0.32,
-          "lowerBound": 191951,
+          "taxRate": 32,
+          "lowerBound": 191950,
           "upperBound": 243725
         },
         {
-          "taxRate": 0.35,
-          "lowerBound": 243726,
+          "taxRate": 35,
+          "lowerBound": 243725,
           "upperBound": 609350
         },
         {
-          "taxRate": 0.37,
-          "lowerBound": 609351
+          "taxRate": 37,
+          "lowerBound": 609350
         }
       ],
       "capitalGainsRates":[
         {
-          "taxRate": 0.15,
-          "lowerBound": 47026,
-          "upperBound": 518901
+          "taxRate": 15,
+          "lowerBound": 47025,
+          "upperBound": 518900
         },
         {
-          "taxRate": 0.2,
-          "lowerBound": 518901,
+          "taxRate": 20,
+          "lowerBound": 518900,
         },
       ]
     },
@@ -59,49 +59,49 @@ const brackets = [
       "capitalGainsDeduction": 94050,
       "rates": [
         {
-          "taxRate": 0.1,
+          "taxRate": 10,
           "lowerBound": 0,
           "upperBound": 23200
         },
         {
-          "taxRate": 0.12,
-          "lowerBound": 23201,
+          "taxRate": 12,
+          "lowerBound": 23200,
           "upperBound": 94300
         },
         {
-          "taxRate": 0.22,
-          "lowerBound": 94301,
+          "taxRate": 22,
+          "lowerBound": 94300,
           "upperBound": 201050
         },
         {
-          "taxRate": 0.24,
-          "lowerBound": 201051,
+          "taxRate": 24,
+          "lowerBound": 201050,
           "upperBound": 383900
         },
         {
-          "taxRate": 0.32,
-          "lowerBound": 383901,
+          "taxRate": 32,
+          "lowerBound": 383900,
           "upperBound": 487450
         },
         {
-          "taxRate": 0.35,
-          "lowerBound": 487451,
+          "taxRate": 35,
+          "lowerBound": 487450,
           "upperBound": 731200
         },
         {
-          "taxRate": 0.37,
-          "lowerBound": 731201
+          "taxRate": 37,
+          "lowerBound": 731200
         }
       ],
       "capitalGainsRates":[
         {
-          "taxRate": 0.15,
-          "lowerBound": 94051,
+          "taxRate": 15,
+          "lowerBound": 94050,
           "upperBound": 583750
         },
         {
-          "taxRate": 0.2,
-          "lowerBound": 583751,
+          "taxRate": 20,
+          "lowerBound": 583750,
         },
       ]
     },
@@ -112,49 +112,49 @@ const brackets = [
       "capitalGainsDeduction": 47025,
       "rates": [
         {
-          "taxRate": 0.1,
+          "taxRate": 10,
           "lowerBound": 0,
           "upperBound": 11600
         },
         {
-          "taxRate": 0.12,
-          "lowerBound": 11601,
+          "taxRate": 12,
+          "lowerBound": 11600,
           "upperBound": 47150
         },
         {
-          "taxRate": 0.22,
-          "lowerBound": 47151,
+          "taxRate": 22,
+          "lowerBound": 47150,
           "upperBound": 100525
         },
         {
-          "taxRate": 0.24,
-          "lowerBound": 100526,
+          "taxRate": 24,
+          "lowerBound": 100525,
           "upperBound": 191950
         },
         {
-          "taxRate": 0.32,
-          "lowerBound": 191951,
+          "taxRate": 32,
+          "lowerBound": 191950,
           "upperBound": 243725
         },
         {
-          "taxRate": 0.35,
-          "lowerBound": 243726,
+          "taxRate": 35,
+          "lowerBound": 243725,
           "upperBound": 365600
         },
         {
-          "taxRate": 0.37,
-          "lowerBound": 365601
+          "taxRate": 37,
+          "lowerBound": 365600
         }
       ],
       "capitalGainsRates":[
         {
-          "taxRate": 0.15,
-          "lowerBound": 47026,
+          "taxRate": 15,
+          "lowerBound": 47025,
           "upperBound": 291850
         },
         {
-          "taxRate": 0.2,
-          "lowerBound": 291851,
+          "taxRate": 20,
+          "lowerBound": 291850,
         },
       ]
     },
@@ -165,49 +165,49 @@ const brackets = [
       "capitalGainsDeduction": 63000,
       "rates": [
         {
-          "taxRate": 0.1,
+          "taxRate": 10,
           "lowerBound": 0,
           "upperBound": 16550
         },
         {
-          "taxRate": 0.12,
-          "lowerBound": 16551,
+          "taxRate": 12,
+          "lowerBound": 16550,
           "upperBound": 63100
         },
         {
-          "taxRate": 0.22,
-          "lowerBound": 63101,
+          "taxRate": 22,
+          "lowerBound": 63100,
           "upperBound": 100500
         },
         {
-          "taxRate": 0.24,
-          "lowerBound": 100501,
+          "taxRate": 24,
+          "lowerBound": 100500,
           "upperBound": 191950
         },
         {
-          "taxRate": 0.32,
-          "lowerBound": 191951,
+          "taxRate": 32,
+          "lowerBound": 191950,
           "upperBound": 243700
         },
         {
-          "taxRate": 0.35,
-          "lowerBound": 243726,
+          "taxRate": 35,
+          "lowerBound": 243700,
           "upperBound": 609350
         },
         {
-          "taxRate": 0.37,
-          "lowerBound": 609351
+          "taxRate": 37,
+          "lowerBound": 609350
         }
       ],
       "1160":[
         {
-          "taxRate": 0.15,
-          "lowerBound": 63001,
+          "taxRate": 15,
+          "lowerBound": 63000,
           "upperBound": 551350
         },
         {
-          "taxRate": 0.2,
-          "lowerBound": 551351,
+          "taxRate": 20,
+          "lowerBound": 551350,
         },
       ]
     }

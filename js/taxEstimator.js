@@ -148,7 +148,7 @@ const getTaxCredits = () => {
 
 /**
  * 
- * @param {TaxRateData[]} bracket 
+ * @param {TaxRateData[]} rates 
  * @param {number?} taxableIncome 
  */
 const getTaxBurden = (rates, taxableIncome) => {
@@ -160,16 +160,24 @@ const getTaxBurden = (rates, taxableIncome) => {
     }
     for (const rate of rates){
         if (!rate.upperBound || rate.upperBound > taxableIncome){
-            taxBurden += rate.taxRate * (taxableIncome - rate.lowerBound);
+            taxBurden += getCleanMathOutput(rate.taxRate, taxableIncome, rate.lowerBound);
             break;
         }
 
-        taxBurden += Math.ceil(rate.taxRate * (rate.upperBound - rate.lowerBound));
+        taxBurden += getCleanMathOutput(rate.taxRate, rate.upperBound, rate.lowerBound);
     }
 
-    const totalBurden = Math.floor(taxBurden);
+    return taxBurden === 0 ? 1 : Math.ceil(taxBurden);
+}
 
-    return totalBurden === 0 ? 1 : totalBurden;
+/**
+ * 
+ * @param {number} rate 
+ * @param {number} largerNumber 
+ * @param {number} smallNumber 
+ */
+const getCleanMathOutput = (rate, largerNumber, smallNumber) => {
+    return rate * (largerNumber - smallNumber) / 100;
 }
 
 /**
