@@ -7,25 +7,33 @@
  * @prop {string} friendlyName
  * @prop {number} status
  * @prop {number} standardDeduction
+ * @prop {number} capitalGainsDeduction
  * @prop {TaxRateData[]} rates
+ * @prop {TaxRateData[]} capitalGainsRates
  */
 
 const FICA_RATE = .0765;
 const INCOME_INPUT_SELECTOR = "#income";
+const SHORT_GAINS_SELECTOR = "#short-gains";
+const LONG_GAINS_SELECTOR = "#long-gains";
 const RETIREMENT_INPUT_SELECTOR = "#retirement";
 const HSA_INPUT_SELECTOR = "#hsa";
 const PAYROLL_INPUT_SELECTOR = "#payroll";
 const INFANT_INPUT_SELECTOR = "#infant";
 const YOUNG_INPUT_SELECTOR = "#young";
 const ADULT_INPUT_SELECTOR = "#adult";
-const TAX_BURDEN_TEXT_SELECTOR = "#tax-burden";
+const INCOME_TAX_BURDEN_TEXT_SELECTOR = "#income-tax-burden";
+const CAPITAL_GAINS_TAX_BURDEN_TEXT_SELECTOR = "#capital-gains-tax-burden";
 const FICA_BURDEN_TEXT_SELECTOR = "#fica-burden";
 const FILING_STATUS_SELECT_SELECTOR = "#filing-status";
 const CREDIT_TEXT_SELECTOR = "#credits";
 const EFFECTIVE_TAX_RATE_TEXT_SELECTOR = "#effective-tax-rate";
 
 function calculate(){
-    const income = Number.parseInt(getValueFromElement(INCOME_INPUT_SELECTOR) || 0);
+    const earnedIncome = Number.parseInt(getValueFromElement(INCOME_INPUT_SELECTOR) || 0);
+    const shortGains = Number.parseInt(getValueFromElement(SHORT_GAINS_SELECTOR) || 0);
+    const longGains = Number.parseInt(getValueFromElement(LONG_GAINS_SELECTOR) || 0);
+    const income = earnedIncome + shortGains;
     const bracket = getBracketData();
     if (!bracket){
         return;
@@ -34,10 +42,16 @@ function calculate(){
     const deductions = getTaxDeductions(bracket);
     const credits = getTaxCredits();
     const taxableIncome = income - deductions;
-    const taxBurden = Math.ceil(getTaxBurden(bracket, taxableIncome));
-    const ficaBurden = Math.ceil(income * FICA_RATE);
-    const effectiveTaxRate = getEffectiveTaxRate(income, taxBurden);
-    setElementText(TAX_BURDEN_TEXT_SELECTOR, `$${taxBurden}`);
+    const taxableCapitalGains = longGains - bracket.capitalGainsDeduction;
+    let capitalGainsTaxBurden = 0;
+    if (taxableCapitalGains > 0){
+        capitalGainsTaxBurden = getTaxBurden(bracket.capitalGainsRates, longGains);
+    }
+    const incomeTaxBurden = getTaxBurden(bracket.rates, taxableIncome);
+    const ficaBurden = Math.ceil(earnedIncome * FICA_RATE);
+    const effectiveTaxRate = Math.round(getEffectiveTaxRate(income, incomeTaxBurden) * 100) / 100;
+    setElementText(INCOME_TAX_BURDEN_TEXT_SELECTOR, `$${incomeTaxBurden}`);
+    setElementText(CAPITAL_GAINS_TAX_BURDEN_TEXT_SELECTOR, `$${capitalGainsTaxBurden}`);
     setElementText(FICA_BURDEN_TEXT_SELECTOR, `$${ficaBurden}`);
     setElementText(CREDIT_TEXT_SELECTOR, `$${credits}`);
     setElementText(EFFECTIVE_TAX_RATE_TEXT_SELECTOR, `${effectiveTaxRate}%`);
@@ -134,26 +148,28 @@ const getTaxCredits = () => {
 
 /**
  * 
- * @param {BracketData} bracket 
+ * @param {TaxRateData[]} bracket 
  * @param {number?} taxableIncome 
  */
-const getTaxBurden = (bracket, taxableIncome) => {
+const getTaxBurden = (rates, taxableIncome) => {
     const actualTaxableIncome = taxableIncome > 0 ? taxableIncome : 0;
     let taxBurden = 0;
     if (actualTaxableIncome == 0)
     {
         return taxBurden;
     }
-    for (const rate of bracket.rates){
+    for (const rate of rates){
         if (!rate.upperBound || rate.upperBound > taxableIncome){
             taxBurden += rate.taxRate * (taxableIncome - rate.lowerBound);
             break;
         }
 
-        taxBurden += rate.taxRate * (rate.upperBound - rate.lowerBound);
+        taxBurden += Math.ceil(rate.taxRate * (rate.upperBound - rate.lowerBound));
     }
 
-    return taxBurden;
+    const totalBurden = Math.floor(taxBurden);
+
+    return totalBurden === 0 ? 1 : totalBurden;
 }
 
 /**

@@ -3,6 +3,7 @@ const brackets = [
       "friendlyName": "Single",
       "status": 1,
       "standardDeduction": 14600,
+      "capitalGainsDeduction": 47025,
       "rates": [
         {
           "taxRate": 0.1,
@@ -38,12 +39,24 @@ const brackets = [
           "taxRate": 0.37,
           "lowerBound": 609351
         }
+      ],
+      "capitalGainsRates":[
+        {
+          "taxRate": 0.15,
+          "lowerBound": 47026,
+          "upperBound": 518901
+        },
+        {
+          "taxRate": 0.2,
+          "lowerBound": 518901,
+        },
       ]
     },
     {
       "friendlyName": "Married, filing jointly",
       "status": 2,
       "standardDeduction": 29200,
+      "capitalGainsDeduction": 94050,
       "rates": [
         {
           "taxRate": 0.1,
@@ -79,12 +92,24 @@ const brackets = [
           "taxRate": 0.37,
           "lowerBound": 731201
         }
+      ],
+      "capitalGainsRates":[
+        {
+          "taxRate": 0.15,
+          "lowerBound": 94051,
+          "upperBound": 583750
+        },
+        {
+          "taxRate": 0.2,
+          "lowerBound": 583751,
+        },
       ]
     },
     {
       "friendlyName": "Married, filing separately",
       "status": 3,
       "standardDeduction": 14600,
+      "capitalGainsDeduction": 47025,
       "rates": [
         {
           "taxRate": 0.1,
@@ -120,12 +145,24 @@ const brackets = [
           "taxRate": 0.37,
           "lowerBound": 365601
         }
+      ],
+      "capitalGainsRates":[
+        {
+          "taxRate": 0.15,
+          "lowerBound": 47026,
+          "upperBound": 291850
+        },
+        {
+          "taxRate": 0.2,
+          "lowerBound": 291851,
+        },
       ]
     },
     {
       "friendlyName": "Head of household",
       "status": 4,
       "standardDeduction": 21900,
+      "capitalGainsDeduction": 63000,
       "rates": [
         {
           "taxRate": 0.1,
@@ -161,6 +198,17 @@ const brackets = [
           "taxRate": 0.37,
           "lowerBound": 609351
         }
+      ],
+      "1160":[
+        {
+          "taxRate": 0.15,
+          "lowerBound": 63001,
+          "upperBound": 551350
+        },
+        {
+          "taxRate": 0.2,
+          "lowerBound": 551351,
+        },
       ]
     }
   ];

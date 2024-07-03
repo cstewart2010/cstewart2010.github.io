@@ -64,7 +64,11 @@
                 <h3>Tax Information</h3>
                 <div class="row mt-3">
                     <div class="col">Your federal income tax burden for 2024 is:</div>
-                    <div class="col-2" id="tax-burden"></div>
+                    <div class="col-2" id="income-tax-burden"></div>
+                </div>
+                <div class="row">
+                    <div class="col">Your federal capital gains tax burden for 2024 is:</div>
+                    <div class="col-2" id="capital-gains-tax-burden"></div>
                 </div>
                 <div class="row">
                     <div class="col">Your FICA tax burden for 2024 is:</div>
@@ -83,10 +87,6 @@
             <section class="my-2">
                 <h3 class="text-center">Income Data</h3>
                 <div class="my-3 input-group">
-                    <span class="input-group-text">Income</span>
-                    <input type="number" class="form-control" placeholder="What was your 2024 income?" id="income">
-                </div>
-                <div class="my-3 input-group">
                     <span class="input-group-text">Bracket</span>
                     <select aria-placeholder="Select a bracket:" id="filing-status" class="form-control">
                         <option value="1">Single</option>
@@ -94,6 +94,18 @@
                         <option value="3">Married, filing separately</option>
                         <option value="4">Head of household</option>
                     </select>
+                </div>
+                <div class="my-3 input-group">
+                    <span class="input-group-text">Income</span>
+                    <input type="number" class="form-control" placeholder="What was your 2024 income?" id="income">
+                </div>
+                <div class="my-3 input-group">
+                    <span class="input-group-text">Short-term Capital Gains</span>
+                    <input type="number" class="form-control" placeholder="How much did you make in short-term investments?" id="short-gains">
+                </div>
+                <div class="my-3 input-group">
+                    <span class="input-group-text">Long-term Capital Gains</span>
+                    <input type="number" class="form-control" placeholder="How much did you make in long-term investments?" id="long-gains">
                 </div>
             </section>
             <section class="my-2">
