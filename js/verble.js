@@ -226,6 +226,6 @@ $(window).keydown(e => {
     }
 })
 
-window.onload = () => {
+window.addEventListener("load", () => {
     addAttempt();
-}
+})

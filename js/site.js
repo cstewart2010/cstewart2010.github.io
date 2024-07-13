@@ -1,6 +1,6 @@
 
 
-window.onload = async () => {
+window.addEventListener("load", async () => {
     const navSection = document.querySelector("#nav-section");
     const navHtml = `<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container">
@@ -49,4 +49,4 @@ window.onload = async () => {
     </div>
 </nav>`;
     navSection.innerHTML = navHtml;
-};
+});
