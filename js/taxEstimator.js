@@ -29,34 +29,6 @@ const FILING_STATUS_SELECT_SELECTOR = "#filing-status";
 const CREDIT_TEXT_SELECTOR = "#credits";
 const EFFECTIVE_TAX_RATE_TEXT_SELECTOR = "#effective-tax-rate";
 
-function calculate(){
-    const earnedIncome = Number.parseInt(getValueFromElement(INCOME_INPUT_SELECTOR) || 0);
-    const shortGains = Number.parseInt(getValueFromElement(SHORT_GAINS_SELECTOR) || 0);
-    const longGains = Number.parseInt(getValueFromElement(LONG_GAINS_SELECTOR) || 0);
-    const income = earnedIncome + shortGains;
-    const bracket = getBracketData();
-    if (!bracket){
-        return;
-    }
-
-    const deductions = getTaxDeductions(bracket);
-    const credits = getTaxCredits();
-    const taxableIncome = income - deductions;
-    const taxableCapitalGains = longGains - bracket.capitalGainsDeduction;
-    let capitalGainsTaxBurden = 0;
-    if (taxableCapitalGains > 0){
-        capitalGainsTaxBurden = getTaxBurden(bracket.capitalGainsRates, longGains);
-    }
-    const incomeTaxBurden = getTaxBurden(bracket.rates, taxableIncome);
-    const ficaBurden = Math.ceil(earnedIncome * FICA_RATE);
-    const effectiveTaxRate = Math.round(getEffectiveTaxRate(income, incomeTaxBurden) * 100) / 100;
-    setElementText(INCOME_TAX_BURDEN_TEXT_SELECTOR, `$${incomeTaxBurden}`);
-    setElementText(CAPITAL_GAINS_TAX_BURDEN_TEXT_SELECTOR, `$${capitalGainsTaxBurden}`);
-    setElementText(FICA_BURDEN_TEXT_SELECTOR, `$${ficaBurden}`);
-    setElementText(CREDIT_TEXT_SELECTOR, `$${credits}`);
-    setElementText(EFFECTIVE_TAX_RATE_TEXT_SELECTOR, `${effectiveTaxRate}%`);
-}
-
 /**
  * 
  * @param {string} selector 
@@ -211,3 +183,31 @@ const getTransformedIntInput = (
 
     return 0;
 }
+
+document.getElementById("calculate-tax").addEventListener("click", function(){
+    const earnedIncome = Number.parseInt(getValueFromElement(INCOME_INPUT_SELECTOR) || 0);
+    const shortGains = Number.parseInt(getValueFromElement(SHORT_GAINS_SELECTOR) || 0);
+    const longGains = Number.parseInt(getValueFromElement(LONG_GAINS_SELECTOR) || 0);
+    const income = earnedIncome + shortGains;
+    const bracket = getBracketData();
+    if (!bracket){
+        return;
+    }
+
+    const deductions = getTaxDeductions(bracket);
+    const credits = getTaxCredits();
+    const taxableIncome = income - deductions;
+    const taxableCapitalGains = longGains - bracket.capitalGainsDeduction;
+    let capitalGainsTaxBurden = 0;
+    if (taxableCapitalGains > 0){
+        capitalGainsTaxBurden = getTaxBurden(bracket.capitalGainsRates, longGains);
+    }
+    const incomeTaxBurden = getTaxBurden(bracket.rates, taxableIncome);
+    const ficaBurden = Math.ceil(earnedIncome * FICA_RATE);
+    const effectiveTaxRate = Math.round(getEffectiveTaxRate(income, incomeTaxBurden) * 100) / 100;
+    setElementText(INCOME_TAX_BURDEN_TEXT_SELECTOR, `$${incomeTaxBurden}`);
+    setElementText(CAPITAL_GAINS_TAX_BURDEN_TEXT_SELECTOR, `$${capitalGainsTaxBurden}`);
+    setElementText(FICA_BURDEN_TEXT_SELECTOR, `$${ficaBurden}`);
+    setElementText(CREDIT_TEXT_SELECTOR, `$${credits}`);
+    setElementText(EFFECTIVE_TAX_RATE_TEXT_SELECTOR, `${effectiveTaxRate}%`);
+});

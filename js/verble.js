@@ -16,7 +16,7 @@ let Iterator = 0;
 let VerblePosition = 1;
 let IsGameActive = true;
 
-function addAttempt(){
+const addAttempt = () => {
     Iterator++;
     let container = document.createElement("div");
     container.classList.add("container");
@@ -40,21 +40,21 @@ function addAttempt(){
     document.getElementById("attempts").appendChild(container);
 }
 
-function clickLetter(letter){
+const clickLetter = letter => {
     document.getElementById(`letter-${Iterator}-${VerblePosition}`).textContent = letter
     if (VerblePosition < 5){
         VerblePosition++;
     }
 }
 
-function deleteLetter(){
+const deleteLetter = () => {
     document.getElementById(`letter-${Iterator}-${VerblePosition}`).textContent = '';
     if (VerblePosition > 1){
         VerblePosition--;
     }
 }
 
-function check(){
+const check = () => {
     const lastChild = document.getElementById("attempts").lastChild;
     var thing = lastChild.querySelectorAll(".solution-letter");
     let guess = '';
@@ -113,8 +113,8 @@ function check(){
 const addResultToSave = (counter) => {
     document.querySelectorAll(".d-flex.justify-content-center button").forEach(button => {
         button.disabled = true;
-    })
-    window.onkeydown = () => false;
+    });
+    window.addEventListener("keydown", () => false);
     let save = getSave();
     if (!save){
         save = {
@@ -134,7 +134,7 @@ const addResultToSave = (counter) => {
     postResults(counter);
 }
 
-function postResults(counter){
+const postResults = counter => {
     const save = getSave();
     if (save){
         console.log(EndGameMessage[counter]);
@@ -144,7 +144,7 @@ function postResults(counter){
     }
 }
 
-function showStats(title){    
+const showStats = title => {    
     const save = getSave();
     if (save){
         const sum = Object.values(save).reduce((a, b) => a + b);
@@ -176,7 +176,7 @@ function showStats(title){
         });
         copiedText = copiedText.trim();
         const button = document.createElement("button");
-        button.onclick = () => {
+        button.addEventListener("click", () => {
             if (navigator.share){
                 navigator.share({
                     title,
@@ -194,7 +194,7 @@ function showStats(title){
                     document.getElementById("modal-share-text").textContent = reason;
                 });
             }
-        }
+        });
         button.textContent = "Share "
         button.classList.add("btn", "btn-primary");
         const shareIcon  = document.createElement("i");
@@ -208,11 +208,18 @@ function showStats(title){
     }
 }
 
-function getSave(){
+const getSave = () => {
     return JSON.parse(localStorage.getItem(SAVESTRING));
 }
 
-$(window).keydown(e => {
+"qwertyuiopasdfghjklzxcvbnm".split("").forEach(id => {
+    document.getElementById(id).addEventListener("click", () => clickLetter(id));
+});
+document.getElementById("enter").addEventListener("click", check);
+document.getElementById("delete").addEventListener("click", deleteLetter);
+document.getElementById("stats").addEventListener("click", () => showStats('Current Stats'));
+document.getElementById("quit").addEventListener("click", () => addResultToSave('7'));
+window.addEventListener("keydown", e => {
     if (IsGameActive){
         if (e.key === "Enter"){
             check();
@@ -224,8 +231,5 @@ $(window).keydown(e => {
             clickLetter(e.key);
         }
     }
-})
-
-window.addEventListener("load", () => {
-    addAttempt();
-})
+});
+window.addEventListener("load", addAttempt);
