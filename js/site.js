@@ -4,7 +4,7 @@ window.addEventListener("load", async () => {
     const navSection = document.querySelector("#nav-section");
     const navHtml = `<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container">
-        <a class="navbar-brand" href="index.html">
+        <a class="navbar-brand" href="https://cstewart2010.github.io">
             Charles Stewart
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -33,17 +33,17 @@ window.addEventListener("load", async () => {
                             </a>
                         </li>
                         <li>
-                            <a class="dropdown-item" href="verble.html">
+                            <a class="dropdown-item" href="https://cstewart2010.github.io/verble">
                                 Verble
                             </a>
                         </li>
                         <li>
-                            <a class="dropdown-item" href="taxEstimator.html">
+                            <a class="dropdown-item" href="https://cstewart2010.github.io/taxEstimator">
                                 Tax Estimator
                             </a>
                         </li>
                         <li>
-                            <a class="dropdown-item" href="/shiny-calculator">
+                            <a class="dropdown-item" href="https://cstewart2010.github.io/shiny-calculator">
                                 Pokemon Shiny Calculator
                             </a>
                         </li>
