@@ -42,6 +42,11 @@ window.addEventListener("load", async () => {
                                 Tax Estimator
                             </a>
                         </li>
+                        <li>
+                            <a class="dropdown-item" href="/shiny-calculator">
+                                Pokemon Shiny Calculator
+                            </a>
+                        </li>
                     </ul>
                 </li>
             </ul>
