@@ -1,6 +1,8 @@
 const WORD = WORDS[Math.floor(Math.random()*WORDS.length)]
 const ALPHANUMERICS = "1234567890poiuytrewqasdfghjklmnbvcxz";
 
+console.log("let's goo");
+
 const EndGameMessage= {
     "1": "Unbelievable!",
     "2": "Incredible!",
@@ -25,7 +27,7 @@ const addAttempt = () => {
     let iterator = 1;
     while (iterator < 6){
         let letter = document.createElement("div");
-        letter.classList.add("solution-letter", "p-2", "m-1", "text-center", "border", "bg-dark", "text-white");
+        letter.classList.add("solution-letter", "p-2", "m-1", "text-center", "border", "bg-dark", "text-white", "text-uppercase");
         letter.id = `letter-${Iterator}-${iterator}`;
         letter.onpaste = () => {
             return false;
@@ -210,26 +212,28 @@ const showStats = title => {
 
 const getSave = () => {
     return JSON.parse(localStorage.getItem(SAVESTRING));
-}
+};
 
-"qwertyuiopasdfghjklzxcvbnm".split("").forEach(id => {
-    document.getElementById(id).addEventListener("click", () => clickLetter(id));
-});
-document.getElementById("enter").addEventListener("click", check);
-document.getElementById("delete").addEventListener("click", deleteLetter);
-document.getElementById("stats").addEventListener("click", () => showStats('Current Stats'));
-document.getElementById("quit").addEventListener("click", () => addResultToSave('7'));
-window.addEventListener("keydown", e => {
-    if (IsGameActive){
-        if (e.key === "Enter"){
-            check();
+const verbleOnload = () => {
+    "qwertyuiopasdfghjklzxcvbnm".split("").forEach(id => {
+        document.getElementById(id).addEventListener("click", () => clickLetter(id));
+    });
+    document.getElementById("enter").addEventListener("click", check);
+    document.getElementById("delete").addEventListener("click", deleteLetter);
+    document.getElementById("stats").addEventListener("click", () => showStats('Current Stats'));
+    document.getElementById("quit").addEventListener("click", () => addResultToSave('7'));
+    window.addEventListener("keydown", e => {
+        if (IsGameActive){
+            if (e.key === "Enter"){
+                check();
+            }
+            if (e.key === "Backspace" || e.key === "Delete"){
+                deleteLetter();
+            }
+            if (ALPHANUMERICS.includes(e.key)){
+                clickLetter(e.key);
+            }
         }
-        if (e.key === "Backspace" || e.key === "Delete"){
-            deleteLetter();
-        }
-        if (ALPHANUMERICS.includes(e.key)){
-            clickLetter(e.key);
-        }
-    }
-});
-window.addEventListener("load", addAttempt);
+    });
+    addAttempt()
+};

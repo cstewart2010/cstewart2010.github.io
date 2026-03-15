@@ -30,8 +30,8 @@ const CREDIT_TEXT_SELECTOR = "#credits";
 const EFFECTIVE_TAX_RATE_TEXT_SELECTOR = "#effective-tax-rate";
 
 /**
- * 
- * @param {string} selector 
+ *
+ * @param {string} selector
  * @returns {string}
  */
 const getValueFromElement = (selector) => {
@@ -39,16 +39,16 @@ const getValueFromElement = (selector) => {
 }
 
 /**
- * 
- * @param {string} selector 
- * @param {string} text 
+ *
+ * @param {string} selector
+ * @param {string} text
  */
 const setElementText = (selector, text) => {
     document.querySelector(selector).innerHTML = text;
 }
 
 /**
- * 
+ *
  * @returns {BracketData}
  */
 const getBracketData = () => {
@@ -67,8 +67,8 @@ const getBracketData = () => {
 }
 
 /**
- * 
- * @param {BracketData} bracket 
+ *
+ * @param {BracketData} bracket
  */
 const getTaxDeductions = (bracket) => {
     const retirementInputElement = document.querySelector(RETIREMENT_INPUT_SELECTOR);
@@ -119,9 +119,9 @@ const getTaxCredits = () => {
 }
 
 /**
- * 
- * @param {TaxRateData[]} rates 
- * @param {number?} taxableIncome 
+ *
+ * @param {TaxRateData[]} rates
+ * @param {number?} taxableIncome
  */
 const getTaxBurden = (rates, taxableIncome) => {
     const actualTaxableIncome = taxableIncome > 0 ? taxableIncome : 0;
@@ -143,20 +143,20 @@ const getTaxBurden = (rates, taxableIncome) => {
 }
 
 /**
- * 
- * @param {number} rate 
- * @param {number} largerNumber 
- * @param {number} smallNumber 
+ *
+ * @param {number} rate
+ * @param {number} largerNumber
+ * @param {number} smallNumber
  */
 const getCleanMathOutput = (rate, largerNumber, smallNumber) => {
     return rate * (largerNumber - smallNumber) / 100;
 }
 
 /**
- * 
- * @param {number} income 
- * @param {number} taxBurden 
- * @returns 
+ *
+ * @param {number} income
+ * @param {number} taxBurden
+ * @returns
  */
 const getEffectiveTaxRate = (income, taxBurden) => {
     if (income === 0){
@@ -166,10 +166,10 @@ const getEffectiveTaxRate = (income, taxBurden) => {
 }
 
 /**
- * 
- * @param {HTMLInputElement} inputElement 
- * @param {(input: number) => boolean} validator 
- * @param {(input: number) => number} transformation 
+ *
+ * @param {HTMLInputElement} inputElement
+ * @param {(input: number) => boolean} validator
+ * @param {(input: number) => number} transformation
  */
 const getTransformedIntInput = (
     inputElement,
@@ -183,31 +183,3 @@ const getTransformedIntInput = (
 
     return 0;
 }
-
-document.getElementById("calculate-tax").addEventListener("click", function(){
-    const earnedIncome = Number.parseInt(getValueFromElement(INCOME_INPUT_SELECTOR) || 0);
-    const shortGains = Number.parseInt(getValueFromElement(SHORT_GAINS_SELECTOR) || 0);
-    const longGains = Number.parseInt(getValueFromElement(LONG_GAINS_SELECTOR) || 0);
-    const income = earnedIncome + shortGains;
-    const bracket = getBracketData();
-    if (!bracket){
-        return;
-    }
-
-    const deductions = getTaxDeductions(bracket);
-    const credits = getTaxCredits();
-    const taxableIncome = income - deductions;
-    const taxableCapitalGains = longGains - bracket.capitalGainsDeduction;
-    let capitalGainsTaxBurden = 0;
-    if (taxableCapitalGains > 0){
-        capitalGainsTaxBurden = getTaxBurden(bracket.capitalGainsRates, longGains);
-    }
-    const incomeTaxBurden = getTaxBurden(bracket.rates, taxableIncome);
-    const ficaBurden = Math.ceil(earnedIncome * FICA_RATE);
-    const effectiveTaxRate = Math.round(getEffectiveTaxRate(income, incomeTaxBurden) * 100) / 100;
-    setElementText(INCOME_TAX_BURDEN_TEXT_SELECTOR, `$${incomeTaxBurden}`);
-    setElementText(CAPITAL_GAINS_TAX_BURDEN_TEXT_SELECTOR, `$${capitalGainsTaxBurden}`);
-    setElementText(FICA_BURDEN_TEXT_SELECTOR, `$${ficaBurden}`);
-    setElementText(CREDIT_TEXT_SELECTOR, `$${credits}`);
-    setElementText(EFFECTIVE_TAX_RATE_TEXT_SELECTOR, `${effectiveTaxRate}%`);
-});
