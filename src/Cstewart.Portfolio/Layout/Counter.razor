@@ -1,0 +1,10 @@
+@if (Generation == Gen9)
+{
+    <Gen9Conditions />
+}
+
+@code {
+    private const int Gen9 = 9;
+    [Parameter]
+    public int Generation { get; set; }
+}
