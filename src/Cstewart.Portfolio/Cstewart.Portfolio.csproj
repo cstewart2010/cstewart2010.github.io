@@ -7,10 +7,11 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Cstewart.Common.Components" Version="1.0.5" />
+        <PackageReference Include="Cstewart.Common.Components" Version="1.0.6" />
         <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="8.0.16"/>
         <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="8.0.16" PrivateAssets="all"/>
         <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.3.0" />
+        <PackageReference Include="PokeApiNet" Version="4.1.0" />
     </ItemGroup>
 
     <ItemGroup>

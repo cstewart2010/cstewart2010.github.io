@@ -1,0 +1,47 @@
+@using Cstewart.Portfolio.Extensions
+
+<div class="table-responsive text-center">
+    <table class="table caption-top">
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Type</th>
+            <th>Damage Class</th>
+            <th>Description</th>
+            <th>Base Power</th>
+            <th>Accuracy</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr scope="row">
+            <td>@Move.Name.ToCapitalized()</td>
+            <td>@Move.Type.ToCapitalized()</td>
+            <td>@Move.DamageClass.ToCapitalized()</td>
+            <td>@Move.FlavorText</td>
+            <td>@GetDamage()</td>
+            <td>@Move.Accuracy</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+@code {
+
+    [Parameter, EditorRequired]
+    public DTOs.MoveData Move { get; set; }
+
+    private object? GetDamage()
+    {
+        if (Move.DamageClass == Constants.DamageClasses.Status)
+        {
+            return "0";
+        }
+
+        if (Move.BasePower == null)
+        {
+            return "Variable";
+        }
+
+        return Move.BasePower;
+    }
+}

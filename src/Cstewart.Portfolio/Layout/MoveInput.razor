@@ -1,0 +1,28 @@
+<div class="input-group mb-3">
+    <span class="input-group-text">Move</span>
+    <input class="form-control" list="moveDex" placeholder="Type to search..." @bind-value="MoveName" @oninput="OnMoveNameChanged" />
+    <datalist id="moveDex">
+        @foreach (var move in MovedexCollection)
+        {
+            <option value="@move">@move</option>
+        }
+    </datalist>
+</div>
+
+@code {
+    [Parameter, EditorRequired]
+    public string MoveName { get; set; }
+    [Parameter]
+    public EventCallback<string> MoveNameChanged { get; set; }
+    [Parameter, EditorRequired]
+    public ICollection<string> MovedexCollection { get; set; }
+
+    private async Task OnMoveNameChanged(ChangeEventArgs? e)
+    {
+        var name = e?.Value?.ToString();
+        if (name != null && MovedexCollection.Contains(name))
+        {
+            await MoveNameChanged.InvokeAsync(name);
+        }
+    }
+}

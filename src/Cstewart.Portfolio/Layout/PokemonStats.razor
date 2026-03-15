@@ -1,0 +1,182 @@
+@using Cstewart.Portfolio.Extensions
+<div class="table-responsive text-center">
+    <table class="table align-middle">
+        <thead>
+            <tr>
+                <th scope="col">Name</th>
+                <th scope="col">HP</th>
+                <th scope="col">Attack</th>
+                <th scope="col">Defense</th>
+                <th scope="col">Special Attack</th>
+                <th scope="col">Special Defense</th>
+                <th scope="col">Speed</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th scope="row">@Pokemon.Species.ToCapitalized() (@string.Join("/", Pokemon.Types.Select(x => x.ToCapitalized())))</th>
+                <td>
+                    <input class="form-control" type="number" min="0" max="@Pokemon.HP" @bind-value="Pokemon.CurrentHP" @oninput="OnCurrentHPChanged" />
+                </td>
+                <td>@Pokemon.Attack</td>
+                <td>@Pokemon.Defense</td>
+                <td>@Pokemon.SpecialAttack</td>
+                <td>@Pokemon.SpecialDefense</td>
+                <td>@Pokemon.Speed</td>
+            </tr>
+            <tr>
+                <th scope="row">IVs</th>
+                <td>
+                    <input class="form-control" type="number" min="0" max="31" @bind-value="Pokemon.IVs.HP" @oninput="e => OnIntChanged(e, HPIVsChanged)" />
+                </td>
+                <td>
+                    <input class="form-control" type="number" min="0" max="31" @bind-value="Pokemon.IVs.Attack" @oninput="e => OnIntChanged(e, AttackIVsChanged)" />
+                </td>
+                <td>
+                    <input class="form-control" type="number" min="0" max="31" @bind-value="Pokemon.IVs.Defense" @oninput="e => OnIntChanged(e, DefenseIVsChanged)" />
+                </td>
+                <td>
+                    <input class="form-control" type="number" min="0" max="31" @bind-value="Pokemon.IVs.SpecialAttack" @oninput="e => OnIntChanged(e, SpecialAttackIVsChanged)" />
+                </td>
+                <td>
+                    <input class="form-control" type="number" min="0" max="31" @bind-value="Pokemon.IVs.SpecialDefense" @oninput="e => OnIntChanged(e, SpecialDefenseIVsChanged)" />
+                </td>
+                <td>
+                    <input class="form-control" type="number" min="0" max="31" @bind-value="Pokemon.IVs.Speed" @oninput="e => OnIntChanged(e, SpeedIVsChanged)" />
+                </td>
+            </tr>
+            <tr>
+                <th scope="row">EVs</th>
+                <td>
+                    <input class="form-control" type="number" min="0" max="252" @bind-value="Pokemon.EVs.HP" @oninput="e => OnIntChanged(e, HPEVsChanged)" />
+                </td>
+                <td>
+                    <input class="form-control" type="number" min="0" max="252" @bind-value="Pokemon.EVs.Attack" @oninput="e => OnIntChanged(e, AttackEVsChanged)" />
+                </td>
+                <td>
+                    <input class="form-control" type="number" min="0" max="252" @bind-value="Pokemon.EVs.Defense" @oninput="e => OnIntChanged(e, DefenseEVsChanged)" />
+                </td>
+                <td>
+                    <input class="form-control" type="number" min="0" max="252" @bind-value="Pokemon.EVs.SpecialAttack" @oninput="e => OnIntChanged(e, SpecialAttackEVsChanged)" />
+                </td>
+                <td>
+                    <input class="form-control" type="number" min="0" max="252" @bind-value="Pokemon.EVs.SpecialDefense" @oninput="e => OnIntChanged(e, SpecialDefenseEVsChanged)" />
+                </td>
+                <td>
+                    <input class="form-control" type="number" min="0" max="252" @bind-value="Pokemon.EVs.Speed" @oninput="e => OnIntChanged(e, SpeedEVsChanged)" />
+                </td>
+            </tr>
+            <tr>
+                <th scope="row" colspan="2">Stages</th>
+                <td>
+                    <input class="form-control" type="number" min="-6" max="6" @bind-value="Pokemon.Stages.Attack" @oninput="e => OnIntChanged(e, AttackStagesChanged)" />
+                </td>
+                <td>
+                    <input class="form-control" type="number" min="-6" max="6" @bind-value="Pokemon.Stages.Defense" @oninput="e => OnIntChanged(e, DefenseStagesChanged)" />
+                </td>
+                <td>
+                    <input class="form-control" type="number" min="-6" max="6" @bind-value="Pokemon.Stages.SpecialAttack" @oninput="e => OnIntChanged(e, SpecialAttackStagesChanged)" />
+                </td>
+                <td>
+                    <input class="form-control" type="number" min="-6" max="6" @bind-value="Pokemon.Stages.SpecialDefense" @oninput="e => OnIntChanged(e, SpecialDefenseStagesChanged)" />
+                </td>
+                <td>
+                    <input class="form-control" type="number" min="-6" max="6" @bind-value="Pokemon.Stages.Speed" @oninput="e => OnIntChanged(e, SpeedStagesChanged)" />
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+@code {
+    [Parameter, EditorRequired]
+    public DataModel.StattedPokemon Pokemon { get; set; }
+    [Parameter, EditorRequired]
+    public double CurrentHP { get; set; }
+    [Parameter]
+    public EventCallback<double> CurrentHPChanged { get; set; }
+    [Parameter, EditorRequired]
+    public int HPIVs { get; set; }
+    [Parameter]
+    public EventCallback<int> HPIVsChanged { get; set; }
+    [Parameter, EditorRequired]
+    public int AttackIVs { get; set; }
+    [Parameter]
+    public EventCallback<int> AttackIVsChanged { get; set; }
+    [Parameter, EditorRequired]
+    public int DefenseIVs { get; set; }
+    [Parameter]
+    public EventCallback<int> DefenseIVsChanged { get; set; }
+    [Parameter, EditorRequired]
+    public int SpecialAttackIVs { get; set; }
+    [Parameter]
+    public EventCallback<int> SpecialAttackIVsChanged { get; set; }
+    [Parameter, EditorRequired]
+    public int SpecialDefenseIVs { get; set; }
+    [Parameter]
+    public EventCallback<int> SpecialDefenseIVsChanged { get; set; }
+    [Parameter, EditorRequired]
+    public int SpeedIVs { get; set; }
+    [Parameter]
+    public EventCallback<int> SpeedIVsChanged { get; set; }
+    [Parameter, EditorRequired]
+    public int HPEVs { get; set; }
+    [Parameter]
+    public EventCallback<int> HPEVsChanged { get; set; }
+    [Parameter, EditorRequired]
+    public int AttackEVs { get; set; }
+    [Parameter]
+    public EventCallback<int> AttackEVsChanged { get; set; }
+    [Parameter, EditorRequired]
+    public int DefenseEVs { get; set; }
+    [Parameter]
+    public EventCallback<int> DefenseEVsChanged { get; set; }
+    [Parameter, EditorRequired]
+    public int SpecialAttackEVs { get; set; }
+    [Parameter]
+    public EventCallback<int> SpecialAttackEVsChanged { get; set; }
+    [Parameter, EditorRequired]
+    public int SpecialDefenseEVs { get; set; }
+    [Parameter]
+    public EventCallback<int> SpecialDefenseEVsChanged { get; set; }
+    [Parameter, EditorRequired]
+    public int SpeedEVs { get; set; }
+    [Parameter]
+    public EventCallback<int> SpeedEVsChanged { get; set; }
+    [Parameter, EditorRequired]
+    public int AttackStages { get; set; }
+    [Parameter]
+    public EventCallback<int> AttackStagesChanged { get; set; }
+    [Parameter, EditorRequired]
+    public int DefenseStages { get; set; }
+    [Parameter]
+    public EventCallback<int> DefenseStagesChanged { get; set; }
+    [Parameter, EditorRequired]
+    public int SpecialAttackStages { get; set; }
+    [Parameter]
+    public EventCallback<int> SpecialAttackStagesChanged { get; set; }
+    [Parameter, EditorRequired]
+    public int SpecialDefenseStages { get; set; }
+    [Parameter]
+    public EventCallback<int> SpecialDefenseStagesChanged { get; set; }
+    [Parameter, EditorRequired]
+    public int SpeedStages { get; set; }
+    [Parameter]
+    public EventCallback<int> SpeedStagesChanged { get; set; }
+
+    private async Task OnCurrentHPChanged(ChangeEventArgs e)
+    {
+        if (double.TryParse(e.Value?.ToString(), out var hp))
+        {
+            await CurrentHPChanged.InvokeAsync(hp);
+        }
+    }
+
+    private async Task OnIntChanged(ChangeEventArgs e, EventCallback<int> callback)
+    {
+        if (int.TryParse(e.Value?.ToString(), out var number))
+        {
+            await callback.InvokeAsync(number);
+        }
+    }
+}
