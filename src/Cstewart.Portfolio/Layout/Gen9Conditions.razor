@@ -1,0 +1,63 @@
+<h3>Gen 9</h3>
+
+<div class="my-2">
+    <p>
+        There is a @GetEffectiveRate()%
+        chance of encountering a shiny pokemon with the current parameters.
+    </p>
+    <div class="input-group">
+        <span class="input-group-text">Shiny Charm?</span>
+        <InputSelect class="form-select" @bind-Value="_shinyCharmRolls">
+            <option value="3">Yes</option>
+            <option value="1" selected>No</option>
+        </InputSelect>
+    </div>
+    <div class="input-group">
+        <span class="input-group-text">Sparkling Power?</span>
+        <InputSelect class="form-select" @bind-Value="_sparklingPowerRolls">
+            <option value="1">Lv. 1</option>
+            <option value="2">Lv. 2</option>
+            <option value="3">Lv. 3</option>
+            <option value="0" selected>No</option>
+        </InputSelect>
+    </div>
+    <div class="input-group">
+        <span class="input-group-text">Outbreak Counter?</span>
+        <InputSelect class="form-select" @bind-Value="_standardOutbreakRolls">
+            <option value="1">At least 30 defeated</option>
+            <option value="2">At least 60 defeated</option>
+            <option value="0" selected>None</option>
+        </InputSelect>
+    </div>
+    <div class="input-group">
+        <span class="input-group-text">Pokemon Encountered At Current Odds</span>
+        <input type="number" class="form-control" min="1" defaultValue="@DefaultWildCounter" @bind-value="_wildCounter" />
+    </div>
+</div>
+
+@code {
+    private const int DefaultShinyCharmRolls = 1;
+    private const int DefaultSparklingPowerRolls = 0;
+    private const int DefaultStandardOutbreakRolls = 0;
+    private const int DefaultWildCounter = 1;
+    private const double ShinyRate = 0.00024414062;
+    private const double Complement = 1 - ShinyRate;
+
+    private int _shinyCharmRolls = DefaultShinyCharmRolls;
+    private int _sparklingPowerRolls = DefaultSparklingPowerRolls;
+    private int _standardOutbreakRolls = DefaultStandardOutbreakRolls;
+    private int _wildCounter = DefaultWildCounter;
+
+    private double GetEffectiveRate()
+    {
+        var rolls = _wildCounter * (_shinyCharmRolls + _sparklingPowerRolls + _standardOutbreakRolls);
+        if (rolls < 0)
+        {
+            return 0;
+        }
+        
+        var effectiveComplement = Math.Pow(Complement, rolls);
+
+        return Math.Round(10000 * (1 - effectiveComplement)) / 100;
+    }
+}
