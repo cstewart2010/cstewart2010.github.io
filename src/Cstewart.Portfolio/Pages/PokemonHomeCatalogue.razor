@@ -1,4 +1,4 @@
-@page "/pokemon-home-catalogue"
+@page "/catalogue"
 @using System.Text.Json
 @using Cstewart.Portfolio.DataModel
 @using Cstewart.Portfolio.DTOs
@@ -7,10 +7,14 @@
 @inject IPokeService PokeService;
 @inject IJSRuntime JSRuntime;
 
+<PageTitle>Pokemon Home Catalogue</PageTitle>
+
+<h3>Pokemon Home Catalogue</h3>
+
 @if (_isReady)
 {
     <div class="input-group">
-        <input class="form-control" @oninput="x => _searchString = x.Value?.ToString() ?? string.Empty" />
+        <input placeholder="Search for pokemon..." class="form-control" @oninput="x => _searchString = x.Value?.ToString() ?? string.Empty" />
         <button class="btn" data-bs-toggle="modal" data-bs-target="#pokemon-shiny-data-modal">View Data</button>
         <button class="btn btn-danger" title="This will take a while. You have been warned." @onclick="RefreshList">Refresh List</button>
     </div>
