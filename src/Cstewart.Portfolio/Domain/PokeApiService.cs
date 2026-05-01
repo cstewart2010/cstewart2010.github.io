@@ -1,4 +1,5 @@
 using Cstewart.Portfolio.Constants;
+using Cstewart.Portfolio.DataModel;
 using Cstewart.Portfolio.DTOs;
 using Cstewart.Portfolio.Extensions;
 using Cstewart.Portfolio.Services;
@@ -9,6 +10,7 @@ namespace Cstewart.Portfolio.Domain;
 public class PokeApiService : IPokeService
 {
     private readonly PokeApiClient _client;
+    private ShinyPokemon[] _currentShinyPokemon = [];
 
     public PokeApiService()
     {
@@ -45,6 +47,16 @@ public class PokeApiService : IPokeService
                 IsHidden = y.IsHidden,
             })],
         })];
+    }
+
+    public async Task<ShinyPokemon[]> GetPokemonAsync(ICollection<PokemonHomeData> data)
+    {
+        if (_currentShinyPokemon.Length == 0)
+        {
+            _currentShinyPokemon = await Task.WhenAll(data.Select(GetCurrentShinies));
+        }
+        
+        return _currentShinyPokemon;
     }
 
     public async Task<MoveData?> GetMoveAsync(string name)
@@ -109,5 +121,48 @@ public class PokeApiService : IPokeService
     private static int GetBaseStat(Pokemon pokemon, string statName)
     {
         return pokemon.Stats.First(x => x.Stat.Name == statName).BaseStat;
+    }
+
+    private async Task<ShinyPokemon> GetCurrentShinies(PokemonHomeData data)
+    {
+        var pokemon = await _client.GetResourceAsync<Pokemon>(data.DexNo);
+        var forms = new List<ShinyForm>();
+        if (data.IsShinyDefault)
+        {
+            if (data.Genders.HasFlag(Genders.Male))
+            {
+                forms.Add(new ShinyForm
+                {
+                    FormName = "",
+                    FormUrl = pokemon.Sprites.FrontShiny
+                });
+            }
+            if (data.Genders.HasFlag(Genders.Female))
+            {
+                forms.Add(new ShinyForm
+                {
+                    FormName = "Female",
+                    FormUrl = pokemon.Sprites.FrontShinyFemale
+                });
+            }
+        }
+
+        foreach (var item in data.Forms)
+        {
+            var form = await _client.GetResourceAsync<PokemonForm>($"{pokemon.Species.Name}-{item}");
+            forms.Add(new ShinyForm
+            {
+                FormName = form.FormName.ToCapitalized(),
+                FormUrl = form.Sprites.FrontShiny
+            });
+        }
+
+        return new ShinyPokemon
+        {
+            Name = pokemon.Species.Name.ToCapitalized(),
+            DexNo = data.DexNo,
+            DefaultImageUrl = pokemon.Sprites.FrontDefault,
+            Forms = forms,
+        };
     }
 }

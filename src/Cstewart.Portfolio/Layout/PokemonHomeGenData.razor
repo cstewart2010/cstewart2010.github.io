@@ -1,0 +1,23 @@
+@using Cstewart.Portfolio.DataModel
+
+<div>I've caught @Count (@Percentage%) of the Gen @Generation pokemon!</div>
+
+@code {
+    [Parameter, EditorRequired]
+    public int Generation { get; set; }
+    
+    [Parameter, EditorRequired]
+    public int Start { get; set; }
+    
+    [Parameter, EditorRequired]
+    public int End { get; set; }
+    
+    [Parameter, EditorRequired]
+    public ShinyPokemon[] Pokemon { get; set; } = [];
+
+    private int Count => Pokemon.Skip(Start).Take(End - Start).Count(x => x.Forms.Count != 0);
+
+    private int Total => End - Start;
+
+    private double Percentage => Math.Round(10000.0 * Count / Total) / 100;
+}

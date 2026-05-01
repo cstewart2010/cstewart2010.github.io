@@ -1,3 +1,4 @@
+using Cstewart.Portfolio.DataModel;
 using Cstewart.Portfolio.DTOs;
 
 namespace Cstewart.Portfolio.Services;
@@ -5,6 +6,7 @@ namespace Cstewart.Portfolio.Services;
 public interface IPokeService
 {
     public Task<List<RawPokemon>> GetPokemonAsync(string name);
+    public Task<ShinyPokemon[]> GetPokemonAsync(ICollection<PokemonHomeData> data);
     public Task<MoveData?> GetMoveAsync(string name);
     public Task<NatureData> GetNatureAsync(int index);
     public Task<ICollection<string>> GetPokedexAsync();

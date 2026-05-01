@@ -1,0 +1,40 @@
+@using Cstewart.Portfolio.DataModel
+
+<div class="modal fade" id="pokemon-shiny-modal" tabindex="-1" aria-labelledby="pokemon-shiny-modal-label" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="pokemon-shiny-modal-label">@(SelectedPokemon?.Name ?? "Modal Title")</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                @if (SelectedPokemon != null)
+                {
+                    if (SelectedPokemon.Forms.Count == 0)
+                    {
+                        <div>No shiny @SelectedPokemon.Name caught... yet!</div>
+                    }
+                    else
+                    {
+                        <div class="row justify-content-center">
+                            @foreach (var form in SelectedPokemon.Forms)
+                            {
+                                <div class="col-4 text-center">
+                                    <img class="img-fluid" src="@form.FormUrl" title="@($"{form.FormName} {SelectedPokemon.Name}")" alt="@form.FormName">
+                                </div>
+                            }
+                        </div>
+                    }
+                }
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+    [Parameter, EditorRequired]
+    public ShinyPokemon? SelectedPokemon { get; set; }
+}

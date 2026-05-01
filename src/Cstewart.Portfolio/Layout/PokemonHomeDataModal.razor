@@ -1,0 +1,43 @@
+@using Cstewart.Portfolio.DataModel
+<div class="modal fade" id="pokemon-shiny-data-modal" tabindex="-1" aria-labelledby="pokemon-shiny-data-modal-label" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="pokemon-shiny-data-modal-label">Data</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <InputSelect class="form-select" @bind-Value="_first">
+                    <option value="Overall">Overall</option>
+                    <option value="Gen">By Generation</option>
+                </InputSelect>
+                @switch (_first)
+                {
+                    case "Overall":
+                        <div>I've caught @Count (@Percentage%) pokemon!</div>
+                        break;
+                    case "Gen":
+                        <PokemonHomeGenPicker Pokemon="@Pokemon" />
+                        break;
+                    case "Type":
+                        break;
+                }
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+    [Parameter , EditorRequired]
+    public int Count { get; set; }
+    
+    [Parameter , EditorRequired]
+    public double Percentage { get; set; }
+    
+    [Parameter , EditorRequired]
+    public ShinyPokemon[] Pokemon { get; set; } = [];
+    private string _first = string.Empty;
+}

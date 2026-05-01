@@ -1,0 +1,52 @@
+@using Cstewart.Portfolio.DataModel
+
+<div class="my-2">
+    <InputSelect class="form-select" @bind-Value="_generation">
+        <option value="1">Generation 1</option>
+        <option value="2">Generation 2</option>
+        <option value="3">Generation 3</option>
+        <option value="4">Generation 4</option>
+        <option value="5">Generation 5</option>
+        <option value="6">Generation 6</option>
+        <option value="7">Generation 7</option>
+        <option value="8">Generation 8</option>
+        <option value="9">Generation 9</option>
+    </InputSelect>
+    @switch (_generation)
+    {
+        case 1:
+            <PokemonHomeGenData Generation="@(1)" Start="@(0)" End="@(151)" Pokemon="@Pokemon" />
+            break;
+        case 2:
+            <PokemonHomeGenData Generation="@(2)" Start="@(151)" End="@(251)" Pokemon="@Pokemon" />
+            break;
+        case 3:
+            <PokemonHomeGenData Generation="@(3)" Start="@(251)" End="@(386)" Pokemon="@Pokemon" />
+            break;
+        case 4:
+            <PokemonHomeGenData Generation="@(4)" Start="@(386)" End="@(493)" Pokemon="@Pokemon" />
+            break;
+        case 5:
+            <PokemonHomeGenData Generation="@(5)" Start="@(493)" End="@(649)" Pokemon="@Pokemon" />
+            break;
+        case 6:
+            <PokemonHomeGenData Generation="@(6)" Start="@(649)" End="@(721)" Pokemon="@Pokemon" />
+            break;
+        case 7:
+            <PokemonHomeGenData Generation="@(7)" Start="@(721)" End="@(809)" Pokemon="@Pokemon" />
+            break;
+        case 8:
+            <PokemonHomeGenData Generation="@(8)" Start="@(809)" End="@(905)" Pokemon="@Pokemon" />
+            break;
+        case 9:
+            <PokemonHomeGenData Generation="@(9)" Start="@(905)" End="@(1025)" Pokemon="@Pokemon" />
+            break;
+    }
+</div>
+
+@code {
+    [Parameter, EditorRequired]
+    public ShinyPokemon[] Pokemon { get; set; } = [];
+    
+    private int _generation;
+}

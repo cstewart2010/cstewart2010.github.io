@@ -1,0 +1,79 @@
+@page "/pokemon-home-catalogue"
+@using System.Text.Json
+@using Cstewart.Portfolio.DataModel
+@using Cstewart.Portfolio.DTOs
+@using Cstewart.Portfolio.Services
+@inject HttpClient Http;
+@inject IPokeService PokeService;
+@inject IJSRuntime JSRuntime;
+
+@if (_isReady)
+{
+    <div class="input-group">
+        <input class="form-control" @oninput="x => _searchString = x.Value?.ToString() ?? string.Empty" />
+        <button class="btn" data-bs-toggle="modal" data-bs-target="#pokemon-shiny-data-modal">View Data</button>
+        <button class="btn btn-danger" title="This will take a while. You have been warned." @onclick="RefreshList">Refresh List</button>
+    </div>
+    <div class="row mt-2 text-center">
+        @foreach (var x in _pokemon)
+        {
+            <div class="col-2 @(x.Name.Contains(_searchString, StringComparison.OrdinalIgnoreCase) ? "" : "d-none")">
+                <button class="btn @(x.Forms.Count == 0 ? "btn-secondary" : "btn-info")" data-bs-toggle="modal" data-bs-target="#pokemon-shiny-modal" @onclick="() => OnClick(x)">
+                    <img class="img-fluid" src="@x.DefaultImageUrl" title="@x.Name" alt="@x.Name"/>
+                </button>
+                <div>@x.Name</div>
+            </div>
+        }
+    </div>
+    <PokemonHomeShinyModal SelectedPokemon="@_selectedPokemon" />
+    <PokemonHomeDataModal Pokemon="@_pokemon" Count="@_count" Percentage="@_percentage" />
+}
+else
+{
+    <div>
+        Currently spamming PokeApi for necessary data. Please wait...
+    </div>
+    <Spinner />
+}
+
+@code {
+    private const int Total = 1025;
+    private ShinyPokemon[] _pokemon = [];
+    private ShinyPokemon? _selectedPokemon;
+    private bool _isReady;
+    private int _count;
+    private double _percentage;
+    private string _searchString = string.Empty;
+
+    protected override async Task OnInitializedAsync()
+    {
+        Console.WriteLine("test");
+        var pokemonFromStorage = await JSRuntime.InvokeAsync<string>("localStorage.getItem", "pokemon-home-data");
+        if (string.IsNullOrEmpty(pokemonFromStorage))
+        {
+            var data = await Http.GetFromJsonAsync<PokemonHomeData[]>("pokemon-home-data.json");
+            _pokemon = await PokeService.GetPokemonAsync(data!);
+            await JSRuntime.InvokeVoidAsync("localStorage.setItem", "pokemon-home-data", JsonSerializer.Serialize(_pokemon));
+        }
+        else
+        {
+            _pokemon = JsonSerializer.Deserialize<ShinyPokemon[]>(pokemonFromStorage)!;
+        }
+
+        _count = _pokemon.Count(x => x.Forms.Count != 0);
+        _percentage = Math.Round(10000.0 * _count / Total) / 100;
+        _isReady = true;
+        _selectedPokemon = null;
+    }
+
+    private void OnClick(ShinyPokemon pokemon)
+    {
+        _selectedPokemon = pokemon;
+    }
+
+    private async Task RefreshList()
+    {
+        await JSRuntime.InvokeVoidAsync("localStorage.removeItem", "pokemon-home-data");
+        await JSRuntime.InvokeVoidAsync("location.reload");
+    }
+}
