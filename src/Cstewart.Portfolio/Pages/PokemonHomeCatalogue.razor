@@ -16,7 +16,7 @@
     <div class="input-group">
         <input placeholder="Search for pokemon..." class="form-control" @oninput="x => _searchString = x.Value?.ToString() ?? string.Empty" />
         <button class="btn" data-bs-toggle="modal" data-bs-target="#pokemon-shiny-data-modal">View Data</button>
-        <button class="btn btn-danger" title="This will take a while. You have been warned." @onclick="RefreshList">Refresh List</button>
+        <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#pokemon-refresh-modal">Refresh List</button>
     </div>
     <div class="row mt-2 text-center">
         @foreach (var x in _pokemon)
@@ -31,6 +31,7 @@
     </div>
     <PokemonHomeShinyModal SelectedPokemon="@_selectedPokemon" />
     <PokemonHomeDataModal Pokemon="@_pokemon" Count="@_count" Percentage="@_percentage" />
+    <RefreshPokemonHomeDataModal />
 }
 else
 {
@@ -51,7 +52,6 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        Console.WriteLine("test");
         var pokemonFromStorage = await JSRuntime.InvokeAsync<string>("localStorage.getItem", "pokemon-home-data");
         if (string.IsNullOrEmpty(pokemonFromStorage))
         {
@@ -72,12 +72,7 @@ else
 
     private void OnClick(ShinyPokemon pokemon)
     {
+        _selectedPokemon = null;
         _selectedPokemon = pokemon;
-    }
-
-    private async Task RefreshList()
-    {
-        await JSRuntime.InvokeVoidAsync("localStorage.removeItem", "pokemon-home-data");
-        await JSRuntime.InvokeVoidAsync("location.reload");
     }
 }

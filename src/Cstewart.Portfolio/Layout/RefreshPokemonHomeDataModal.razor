@@ -1,0 +1,29 @@
+@inject IJSRuntime JSRuntime;
+
+<div class="modal fade" id="pokemon-refresh-modal" tabindex="-1" aria-labelledby="pokemon-refresh-modal-label" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="pokemon-refresh-modal-label">Refresh Data</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Refreshing data means pulling from PokeAPI. This will take a while. You have been warned.
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal" @onclick="RefreshList">Refresh Data</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+    
+
+    private async Task RefreshList()
+    {
+        await JSRuntime.InvokeVoidAsync("localStorage.removeItem", "pokemon-home-data");
+        await JSRuntime.InvokeVoidAsync("location.reload");
+    }
+}
