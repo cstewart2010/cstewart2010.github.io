@@ -134,7 +134,7 @@ public class PokeApiService : IPokeService
                 forms.Add(new ShinyForm
                 {
                     FormName = "",
-                    FormUrl = pokemon.Sprites.FrontShiny
+                    FormUrl = pokemon.Sprites.Other.Showdown.FrontShiny
                 });
             }
             if (data.Genders.HasFlag(Genders.Female))
@@ -142,7 +142,7 @@ public class PokeApiService : IPokeService
                 forms.Add(new ShinyForm
                 {
                     FormName = "Female",
-                    FormUrl = pokemon.Sprites.FrontShinyFemale
+                    FormUrl = pokemon.Sprites.Other.Showdown.FrontShinyFemale
                 });
             }
         }
