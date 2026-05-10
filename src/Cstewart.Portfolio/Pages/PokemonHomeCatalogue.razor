@@ -21,7 +21,7 @@
     <div class="row mt-2 text-center">
         @foreach (var x in _pokemon)
         {
-            <div class="col-2 @(x.Name.Contains(_searchString, StringComparison.OrdinalIgnoreCase) ? "" : "d-none")">
+            <div class="col-6 col-md-2 @(x.Name.Contains(_searchString, StringComparison.OrdinalIgnoreCase) ? "" : "d-none")">
                 <button class="btn @(x.Forms.Count == 0 ? "btn-secondary" : "btn-info")" data-bs-toggle="modal" data-bs-target="#pokemon-shiny-modal" @onclick="() => OnClick(x)">
                     <img class="img-fluid" src="@x.DefaultImageUrl" title="@x.Name" alt="@x.Name"/>
                 </button>
